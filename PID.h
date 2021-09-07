@@ -10,7 +10,7 @@
 class PID {
 public:
     // constructor
-    PID(double p_max, double p_min, double p_Kp, double p_Kd, double p_Ki, double p_dt);
+    PID(double p_Kp, double p_Kd, double p_Ki, double p_dt, double p_max, double p_min, bool bounding_flag=true);
     // member function/method
     double calculate(double p_target, double p_feedback);
     // destructor
