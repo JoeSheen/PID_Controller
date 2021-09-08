@@ -14,7 +14,7 @@
  * min_bounding: Minimum value that the controller can produce
  * bounding_flag: Indicates if bounding values are in operation
  * target: The desired value the system is trying to reach
- *         by manipulating the output (also known as setpoint)
+ *         by manipulating the output (also known as set-point)
  * feedback: The system's actual output value regarding the physical world
  * error: Refers to the difference between the target and the feedback
  *
