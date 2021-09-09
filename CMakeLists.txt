@@ -3,4 +3,4 @@ project(PID_Controller)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(PID_Controller main.cpp PID.cpp PID.h)
+add_executable(PID_Controller example/main.cpp PID.cpp PID.h)

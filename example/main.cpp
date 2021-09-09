@@ -4,7 +4,7 @@
 #include <cmath>
 #include <chrono>
 #include <thread>
-#include "PID.h"
+#include "../PID.h"
 
 int main() {
     std::cout << std::setfill('-') << std::setw(50) << "-" << std::endl;
@@ -28,7 +28,7 @@ int main() {
     std::chrono::milliseconds timespan(1500);
 
     // creates a file for storing PID data
-    std::ofstream pid_file("../pid_data_file.csv");
+    std::ofstream pid_file("../example/pid_data_file.csv");
     if (!pid_file) {
         std::cerr << "Error: cannot open output file" << std::endl;
         return -1;
@@ -67,6 +67,9 @@ int main() {
 
     // closes file
     pid_file.close();
+
+    // console output about pid_data_file being created/updated
+    std::cout << "Output file: pid_data_file.csv created" << std::endl;
 
     // deletes the PID object allocated on the heap
     delete pid;
