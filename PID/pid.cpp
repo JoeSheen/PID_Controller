@@ -1,9 +1,10 @@
 //
 // Created by Joe on 11/05/2020.
+// Uses pointer to implementation as a programming implementation technique.
 //
 
 #include <iostream>
-#include "PID.h"
+#include "pid.h"
 
 /*
  * Kp: Proportional Gain
@@ -18,7 +19,7 @@
  * feedback: The system's actual output value regarding the physical world
  * error: Refers to the difference between the target and the feedback
  *
- * PID Gains: (Proportional, Integral, and Derivative):
+ * pid Gains: (Proportional, Integral, and Derivative):
  *  Proportional Component:
  *      Kp * (target - feedback)
  *  Integral Component:
@@ -29,8 +30,8 @@
 */
 
 // implementation class (accessed through impl_ptr):
-// removes implementation details of PID object class from its representation by placing them in a separate class
-class PID::impl {
+// removes implementation details of pid object class from its representation by placing them in a separate class
+class pid::impl {
 public:
     impl(double p_Kp, double p_Kd, double p_Ki, double p_dt, double p_max, double p_min, bool bounding_flag) :
     Kp(p_Kp),
@@ -82,21 +83,21 @@ private:
     double integral;
 };
 
-PID::PID(double p_Kp, double p_Kd, double p_Ki, double p_dt, double p_max, double p_min, bool bounding_flag) {
+pid::pid(double p_Kp, double p_Kd, double p_Ki, double p_dt, double p_max, double p_min, bool bounding_flag) {
     // handles dt being 0.0 (prevents divide by 0 errors)
     if (p_dt == 0.0) {
-        throw std::exception("Error: cannot create PID controller with 0.0 loop interval time (dt)");
+        throw std::exception("Error: cannot create pid controller with 0.0 loop interval time (dt)");
     }
-    // creates a pointer to the PID implementation class
+    // creates a pointer to the pid implementation class
     impl_ptr = new impl(p_Kp, p_Kd, p_Ki, p_dt, p_max, p_min, bounding_flag);
 }
 
-double PID::calculate(double p_target, double p_feedback) {
+double pid::calculate(double p_target, double p_feedback) {
     // calls the calculate function within the implementation class (via pointer)
     return impl_ptr->calculate(p_target, p_feedback);
 }
 
-PID::~PID() {
+pid::~pid() {
     // frees memory taken up on heap by impl_ptr
     delete impl_ptr;
 }

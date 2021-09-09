@@ -1,0 +1,9 @@
+Kp,0.15
+Kd,0.015
+Ki,0.7
+dt,0.45
+max,250.0
+min,-250.0
+b_flag,0
+target,0
+feedback,20.0

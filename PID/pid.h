@@ -7,14 +7,14 @@
 #define PID_CONTROLLER_PID_H
 
 
-class PID {
+class pid {
 public:
     // constructor
-    PID(double p_Kp, double p_Kd, double p_Ki, double p_dt, double p_max, double p_min, bool bounding_flag=true);
+    pid(double p_Kp, double p_Kd, double p_Ki, double p_dt, double p_max, double p_min, bool bounding_flag=true);
     // member function/method
     double calculate(double p_target, double p_feedback);
     // destructor
-    ~PID();
+    ~pid();
 
 private:
     // private implementation class
