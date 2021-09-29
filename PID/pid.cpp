@@ -7,6 +7,7 @@
 #include "pid.h"
 
 /*
+ *
  * Kp: Proportional Gain
  * Kd: Derivative Gain
  * Ki: Integral Gain
@@ -27,6 +28,7 @@
  *  Derivative component:
  *      Kd * Change in error value / Change in time (dt)
  *  pid_output = Proportional component + Integral component + Derivative component
+ *
 */
 
 // implementation class (accessed through impl_ptr):

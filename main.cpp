@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "../PID_Controller//PID/run_pid.h"
+#include "../PID_Controller/PID/run_pid.h"
 
 #ifdef TEST_MAIN
 int main() {
@@ -29,7 +29,7 @@ int main() {
     // opens file for reading PID input data
     std::ifstream input_file("../pid_inputs.csv");
     if (!input_file.is_open()) {
-        std::cerr << "Error: ..." << std::endl;
+        std::cerr << "Error: failed opening pid_inputs.csv file" << std::endl;
         return -1;
     }
 
@@ -44,19 +44,20 @@ int main() {
     std::cout << "--------------------------------------------------" << std::endl;
     std::cout << "PID VARIABLES READ FROM FILE: " << std::endl;
     for(const auto &it : pid_input_map) {
-        std::cout << "\t" << it.first << " : " << it.second << "\n";
+        printf("\t%s %c %.3f\n", it.first.c_str(), 26, it.second);
     }
 
-    // defines the number of control loops to be run (default is 2500)
+    // defines the number of iterations the PID will run
     int loop_number = 1075;
 
     // runs PID
-    int pid_return = PID::run_pid(pid_input_map, loop_number);
+    int pid_flag = PID::run_pid(pid_input_map, loop_number);
 
-    if (pid_return == 0) {
-        std::cout << "--- PID TEST COMPLETE ---" << std::endl;
+    // checks the status of the PID operation
+    if (pid_flag == 0) {
+        std::cout << "--- PID CONTROL APPLICATION COMPLETED ---" << std::endl;
     } else {
-        std::cout << "--- ERROR DURING TEST ---" << std::endl;
+        std::cerr << "--- ERROR OCCURRED WHILST PID IN OPERATION ---" << std::endl;
     }
 
     return 0;

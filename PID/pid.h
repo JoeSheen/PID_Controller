@@ -21,6 +21,7 @@ private:
     class impl;
     // private pointer to implementation class
     impl *impl_ptr;
+
 };
 
 

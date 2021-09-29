@@ -28,8 +28,8 @@ int PID::run_test() {
     // pointer to instance of the PID class allocated on heap
     pid *p = new pid(Kp, Kd, Ki, dt, max, min);
 
-    // defines a timespan variable used to sleep within the for loop for 1.5 seconds
-    std::chrono::milliseconds timespan(1500);
+    // defines a timespan variable used to sleep within the for loop for 1500 microseconds
+    std::chrono::microseconds timespan(1500);
 
     // creates a file for storing PID data
     std::ofstream pid_file("../PID/pid_data_file.csv");
@@ -38,30 +38,30 @@ int PID::run_test() {
         return -1;
     }
     // writes headings to csv file
-    pid_file << "Index, Feedback, Output\n";
+    pid_file << "Index, Feedback, Process Value\n";
 
     // prints table header to console
     std::cout << std::setfill('-') << std::setw(50) << "-" << std::endl;
     std::cout << std::setfill(' ') << std::fixed;
-    std::cout << std::setw(10) << "Index" << std::setw(15) << "Feedback" << std::setw(15) << "Output" << std::endl;
+    std::cout << std::setw(10) << "Index" << std::setw(15) << "Feedback" << std::setw(20) << "Process Value" << std::endl;
     std::cout << std::setfill('-') << std::setw(50) << "-" << std::endl;
     std::cout << std::setfill(' ') << std::fixed;
 
     // prints 205 rows of table to console
     for (int i = 0; i < 205; i++) {
-        // calculates PID output
-        double pid_output = p->calculate(0, feedback_val);
+        // calculates PID process value
+        double pid_process_value = p->calculate(0, feedback_val);
 
         // prints the actual rows
         std::cout << std::setprecision(0) << std::setw(10) << (i + 1) << std::setprecision(5) << std::setw(15)
-        << feedback_val << std::setw(15) << pid_output << std::endl;
+        << feedback_val << std::setw(15) << pid_process_value << std::endl;
 
         // writes row data to PID file
         pid_file << (i + 1) << "," << std::setprecision(5) << feedback_val << "," << std::setprecision(5)
-        << pid_output << std::fixed << "\n";
+        << pid_process_value << std::fixed << "\n";
 
         // updates feedback_val
-        feedback_val += pid_output;
+        feedback_val += pid_process_value;
 
         // sleeps the loop for timespan
         std::this_thread::sleep_for(timespan);
@@ -103,30 +103,30 @@ int PID::run_pid(const std::map<std::string, double>& p_map, int p_num_loop) {
         return -1;
     }
     // writes headings to csv file
-    pid_file << "Index, Feedback, Output\n";
+    pid_file << "Index, Feedback, Process Value\n";
 
     // prints table header to console
     std::cout << std::setfill('-') << std::setw(50) << "-" << std::endl;
     std::cout << std::setfill(' ') << std::fixed;
-    std::cout << std::setw(10) << "Index" << std::setw(15) << "Feedback" << std::setw(15) << "Output" << std::endl;
+    std::cout << std::setw(10) << "Index" << std::setw(15) << "Feedback" << std::setw(20) << "Process Value" << std::endl;
     std::cout << std::setfill('-') << std::setw(50) << "-" << std::endl;
     std::cout << std::setfill(' ') << std::fixed;
 
     // prints the number of rows defined by p_num_loops to file & console
     for (int i = 0; i < p_num_loop; i++) {
-        // calculates PID output
-        double pid_output = p->calculate(p_map.at("target"), feedback);
+        // calculates PID process value
+        double pid_process_value = p->calculate(p_map.at("target"), feedback);
 
         // prints the row for each iteration
         std::cout << std::setprecision(0) << std::setw(10) << (i + 1) << std::setprecision(5) << std::setw(15)
-                  << feedback << std::setw(15) << pid_output << std::endl;
+                  << feedback << std::setw(15) << pid_process_value << std::endl;
 
         // writes row data to PID file
         pid_file << (i + 1) << "," << std::setprecision(5) << feedback << "," << std::setprecision(5)
-                 << pid_output << std::fixed << "\n";
+                 << pid_process_value << std::fixed << "\n";
 
         // updates feedback variable for next loop
-        feedback += pid_output;
+        feedback += pid_process_value;
     }
     // ends table
     std::cout << std::setfill('-') << std::setw(50) << "-" << std::endl;
